@@ -1,0 +1,24 @@
+TODO LIST
+
+Main program loop:
+    Loop that checks streamermanager for new streams
+    On a new video add a task to the task queue to download and upload this video
+
+Stream-side:
+    StreamerManager class
+    Streamer class
+    VOD class
+
+Youtube-side:
+    YoutuberManager class
+    Youtuber class
+    Video class
+
+Database-side:
+    DatabaseManager class
+    Database class
+    DatabaseEntry class
+
+
+Future potential stuff:
+    Web interface
