@@ -3,12 +3,12 @@ TODO LIST
 Main program loop:
     Keeps track of which players turn it is and the visuals of the game
 
-    1. Check if the game is over
-        - If it is, display the winner and end the game
-    2. Display the board
-    3. Ask the player for input
+    1. Display the board
+    2. Ask the player for input
         - If the input is valid, update the board
         - If the input is invalid, ask again
+    3. Check if the game is over
+        - If it is, display the winner and end the game
 
 
     Game class:
