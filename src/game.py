@@ -18,31 +18,44 @@ def main():
     
     ## Initialize pygame ##
     pygame.init()
-    screen = pygame.display.set_mode((800, 800))
+    screen_size = 900
+    screen = pygame.display.set_mode((screen_size, screen_size))
     pygame.display.set_caption("Tic Tac Toe")
     pygame.display.set_icon(pygame.image.load("src/assets/window_icon.png"))
     clock = pygame.time.Clock()
     running = True
     game_objects = []
     board_size = 3
+    board_padding = 40
+    
+    bg_colour = (30, 30, 80)
     
     ## Create game objects ##
-    for x in range(board_size):
-        for y in range(board_size):
-            game_objects.append(objects.Button(((x * 200) + 10, (y * 200) + 10), (160, 160)))
+    btn_size = (screen_size - (2*board_padding + (board_size-1)*board_padding)) / board_size
+    for x in (range(board_size)):
+        for y in (range(board_size)):
+            this_pos = objects.Pos((x * btn_size) + board_padding*(1+x), (y * btn_size) + board_padding*(1+y))
+            game_objects.append(objects.Button(this_pos, (btn_size, btn_size), (bg_colour[0], bg_colour[1], bg_colour[2] + 20)))
     
     ## Main loop ##
     
     while running:
         
+        
         ### Event loop ###
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+                
+        for obj in game_objects:
+            if obj.is_clicked(pygame.mouse.get_pos()):
+                obj.curr_colour = obj.hover_colour
+            else:
+                obj.curr_colour = obj.def_colour
         
         
         ### Draw here ###
-        screen.fill((255, 255, 255))
+        screen.fill(bg_colour)
         for obj in game_objects:
             obj.draw(screen)
         
