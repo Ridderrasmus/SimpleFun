@@ -108,6 +108,7 @@ class Button:
     curr_colour = (255, 0, 0)
     def_colour = (255, 0, 0)
     hover_colour = (255, 0, 0)
+    symbol = " "
     
     
     def __init__(self, pos=[Pos, ()], size=(), colour=(255, 0, 0)):
@@ -126,10 +127,31 @@ class Button:
         
     def draw(self, screen):
         pygame.draw.rect(screen, self.curr_colour, (self.ObjPos.x, self.ObjPos.y, self.width, self.height))
+        if (self.symbol == "X"):
+            pygame.draw.line(screen, (0, 0, 0), (self.ObjPos.x + 10, self.ObjPos.y + 10), (self.ObjPos.x + self.width - 10, self.ObjPos.y + self.height - 10), 5)
+            pygame.draw.line(screen, (0, 0, 0), (self.ObjPos.x + self.width - 10, self.ObjPos.y + 10), (self.ObjPos.x + 10, self.ObjPos.y + self.height - 10), 5)
+        elif (self.symbol == "O"):
+            pygame.draw.circle(screen, (0, 0, 0), (self.ObjPos.x + self.width // 2, self.ObjPos.y + self.height // 2), self.width // 2 - 10, 5)
         
-    def is_clicked(self, pos=[Pos, ()]) -> bool:
+    def is_hovered(self, pos=[Pos, ()]) -> bool:
         if type(pos) != Pos:
             pos = Pos(pos[0], pos[1])
             
         return (self.ObjPos.x <= pos.x <= self.ObjPos.x + self.width and
                 self.ObjPos.y <= pos.y <= self.ObjPos.y + self.height)
+        
+    def click(self, player):
+        if(self.symbol != " "):
+            return
+        
+        if (player.id == 1):
+            self.symbol = "X"
+        elif (player.id == 2):
+            self.symbol = "O"
+            
+class Player:
+    
+    id = 0
+    
+    def __init__(self, id):
+        self.id = id

@@ -46,9 +46,13 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                for obj in game_objects:
+                    if obj.is_hovered(pygame.mouse.get_pos()):
+                        obj.click(objects.Player(2))
                 
         for obj in game_objects:
-            if obj.is_clicked(pygame.mouse.get_pos()):
+            if obj.is_hovered(pygame.mouse.get_pos()):
                 obj.curr_colour = obj.hover_colour
             else:
                 obj.curr_colour = obj.def_colour
