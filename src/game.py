@@ -11,7 +11,7 @@
 #   Rasmus Tanggaard, Malthe Sørensen, Jonas Søgaard Frederiksen
 
 import pygame
-import gameobjects as objects
+from gameobjects import *
 
 
 def main():
@@ -36,11 +36,11 @@ def main():
     btn_size = (screen_size - (2*board_padding + (board_size-1)*board_padding)) / board_size
     for x in (range(board_size)):
         for y in (range(board_size)):
-            this_pos = objects.Pos((x * btn_size) + board_padding*(1+x), (y * btn_size) + board_padding*(1+y))
-            game_objects.append(objects.Button(this_pos, (btn_size, btn_size), (bg_colour[0], bg_colour[1], bg_colour[2] + 20)))
+            this_pos = Pos((x * btn_size) + board_padding*(1+x), (y * btn_size) + board_padding*(1+y))
+            game_objects.append(Button(this_pos, (btn_size, btn_size), (bg_colour[0], bg_colour[1], bg_colour[2] + 20)))
             
     ## Create players ##
-    players = [objects.Player(1), objects.Player(2)]
+    players = [Player(1), Player(2)]
     curr_round = 1
     
     ## Main loop ##
