@@ -11,37 +11,45 @@
 # Authors: 
 #   Rasmus Tanggaard, Malthe Sørensen, Jonas Søgaard Frederiksen
 
-import asyncio
-from Stream.StreamerManager import StreamerManager
-from Youtube.YoutubeManager import YoutubeManager
+import random
 
+bread = ["Sandpaper", "Cardboard", "Sponge", "Plywood", "Concrete Slab", "Astroturf"]
+spread = ["Glue", "Motor Oil", "Paint", "Shaving Cream", "Lotion", "Cement"]
+meat_protein = ["Rubber Bands", "Shoelaces", "Plastic Straws", "Electrical Wires", "Hoses", "Screws"]
+cheese = ["Wax", "Soap", "Chalk", "Playdough", "Styrofoam", "Slime"]
+vegetables = ["Leaves", "Grass", "Plastic Plants", "Pine Cones", "Feathers", "Aluminum Foil"]
+condiments = ["Ink", "Bleach", "Nail Polish", "Antifreeze", "Adhesive", "Coolant"]
+extras = ["Batteries", "Thumbtacks", "Paper Clips", "Nails", "Tape", "Washers"]
 
-looping = True
+sandwich_parts = {
+    "bread": bread,
+    "spread": spread,
+    "meat_protein": meat_protein,
+    "cheese": cheese,
+    "vegetables": vegetables,
+    "condiments": condiments,
+    "extras": extras
+}
 
+def generate_sandwich() -> list:
+    sandwich = []
+    sandwich.append(bread[random.randint(0, len(bread) - 1)])
+    sandwich.append(spread[random.randint(0, len(spread) - 1)])
+    sandwich.append(extras[random.randint(0, len(extras) - 1)])
+    sandwich.append(vegetables[random.randint(0, len(vegetables) - 1)])
+    sandwich.append(cheese[random.randint(0, len(cheese) - 1)])
+    sandwich.append(meat_protein[random.randint(0, len(meat_protein) - 1)])
+    sandwich.append(condiments[random.randint(0, len(condiments) - 1)])
+    sandwich.append(bread[random.randint(0, len(bread) - 1)])
+    return sandwich
 
 def main():
-    streamerManager = StreamerManager()
-    youtubeManager = YoutubeManager()
-    
-    twitch_account = input("Please enter the username of your twitch account: ")
-    
-    streamerManager.addStreamer(twitch_account)
-    
-    asyncio.run(task_loop(streamerManager, youtubeManager))
+    print("Welcome to the Sandwich Generator!")
+    print("Here is your sandwich:")
+    for part in generate_sandwich():
+        print(part)
     
     
-async def task_loop(strmManager, ytManager):
-    while looping:
-        # Check for streamers with new vods
-        pass
-        
-        
-async def handle_vod(strmManager):
-    # Handle what happens when a streamer goes offline and a vod is created
-    ## Download vod into temporary folder
-    ## Upload vod to youtube with the title matching the vod title
-    pass
-        
         
 
 
