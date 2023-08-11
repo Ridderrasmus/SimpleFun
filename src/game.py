@@ -12,32 +12,28 @@
 
 import pygame
 from gameobjects import *
-
+from constants import *
 
 def main():
     
     ## Initialize pygame ##
     pygame.init()
-    screen_size = 900
-    screen = pygame.display.set_mode((screen_size, screen_size))
+    screen = pygame.display.set_mode((SCREEN_SIZE, SCREEN_SIZE))
     pygame.display.set_caption("Tic Tac Toe")
     pygame.display.set_icon(pygame.image.load("src/assets/window_icon.png"))
     clock = pygame.time.Clock()
     running = True
     game_objects = []
-    board_size = 3
-    board_padding = 40
     
-    bg_colour = (30, 30, 80)
     
     
     
     ## Create game objects ##
-    btn_size = (screen_size - (2*board_padding + (board_size-1)*board_padding)) / board_size
-    for x in (range(board_size)):
-        for y in (range(board_size)):
-            this_pos = Pos((x * btn_size) + board_padding*(1+x), (y * btn_size) + board_padding*(1+y))
-            game_objects.append(Button(this_pos, (btn_size, btn_size), (bg_colour[0], bg_colour[1], bg_colour[2] + 20)))
+    btn_size = (SCREEN_SIZE - (2*BOARD_PADDING + (BOARD_SIZE-1)*BOARD_PADDING)) / BOARD_SIZE
+    for x in (range(BOARD_SIZE)):
+        for y in (range(BOARD_SIZE)):
+            this_pos = Pos((x * btn_size) + BOARD_PADDING*(1+x), (y * btn_size) + BOARD_PADDING*(1+y))
+            game_objects.append(Button(this_pos, (btn_size, btn_size), (BG_COLOUR[0], BG_COLOUR[1], BG_COLOUR[2] + 20)))
             
     ## Create players ##
     players = [Player(1), Player(2)]
@@ -70,7 +66,7 @@ def main():
         
         
         ### Draw here ###
-        screen.fill(bg_colour)
+        screen.fill(BG_COLOUR)
         for obj in game_objects:
             obj.draw(screen)
         
