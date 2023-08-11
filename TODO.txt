@@ -1,24 +1,41 @@
 TODO LIST
 
 Main program loop:
-    Loop that checks streamermanager for new streams
-    On a new video add a task to the task queue to download and upload this video
+    Keeps track of which players turn it is and the visuals of the game
 
-Stream-side:
-    StreamerManager class
-    Streamer class
-    VOD class
-
-Youtube-side:
-    YoutuberManager class
-    Youtuber class
-    Video class
-
-Database-side:
-    DatabaseManager class
-    Database class
-    DatabaseEntry class
+    1. Check if the game is over
+        - If it is, display the winner and end the game
+    2. Display the board
+    3. Ask the player for input
+        - If the input is valid, update the board
+        - If the input is invalid, ask again
 
 
-Future potential stuff:
-    Web interface
+    Game class:
+
+
+
+    Board class:
+        - Board size
+        - Button list
+
+
+
+    Button class:
+        - Button text
+        - Button position
+        - Button size
+        - Button color
+        - Button text color
+        - Button image
+        - Check if the button is clicked
+        - Check if the mouse is hovering over the button
+        - Draw function
+        - Is clicked function
+        - Set symbol function
+
+
+
+    Player class:
+
+
