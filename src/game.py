@@ -19,6 +19,7 @@ def main():
     ## Initialize pygame ##
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_SIZE, SCREEN_SIZE))
+    screen.lock(False)
     pygame.display.set_caption("Tic Tac Toe")
     pygame.display.set_icon(pygame.image.load("src/assets/window_icon.png"))
     clock = pygame.time.Clock()
