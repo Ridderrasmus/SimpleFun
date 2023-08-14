@@ -110,6 +110,7 @@ class Board:
         
     def reset(self):
         self.board_squares = []
+        self.create_squares()
         
     def loop(self):
         
@@ -126,6 +127,9 @@ class Board:
             self.make_move()
     
     def create_squares(self):
+        if self.board_squares != []:
+            return
+        
         for x in (range(self.square_layout)):
             for y in (range(self.square_layout)):
                 this_pos = Pos((x * self.btn_size) + BOARD_PADDING*(1+x), (y * self.btn_size) + BOARD_PADDING*(1+y))
@@ -171,10 +175,6 @@ class Board:
         
     
     def make_move(self):
-        
-        if self.board_squares == []:
-            self.create_squares()
-            return
         
         
         for square in self.board_squares:
