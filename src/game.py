@@ -12,7 +12,6 @@
 
 import pygame
 from gameobjects import *
-from board import *
 from states import *
 from constants import *
 
