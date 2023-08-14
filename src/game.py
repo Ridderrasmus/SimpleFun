@@ -52,14 +52,15 @@ class Application:
         ## Main loop ##
         
         while self.running:
+            state = self.game_states[self.curr_state]
             
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     self.running = False
                 else:
-                    self.game_states[self.curr_state].event(event)
+                    state.event(event)
             
-            self.game_states[self.curr_state].loop()
+            state.loop()
 
             ## Update and limit framerate ##
             pygame.display.flip()
