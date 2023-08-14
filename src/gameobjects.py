@@ -111,7 +111,7 @@ class Button:
     symbol = " "
     
     
-    def __init__(self, pos=[Pos, ()], size=(), colour=(255, 0, 0)):
+    def __init__(self, pos: Pos|tuple, size: tuple, colour=(255, 0, 0)):
         if type(pos) == Pos:
             self.ObjPos = pos
         else:
@@ -132,8 +132,15 @@ class Button:
             pygame.draw.line(screen, (0, 0, 0), (self.ObjPos.x + self.width - 10, self.ObjPos.y + 10), (self.ObjPos.x + 10, self.ObjPos.y + self.height - 10), 5)
         elif (self.symbol == "O"):
             pygame.draw.circle(screen, (0, 0, 0), (self.ObjPos.x + self.width // 2, self.ObjPos.y + self.height // 2), self.width // 2 - 10, 5)
+        else:
+            font = pygame.font.SysFont("segoeuiemoji", 50)
+            text = font.render(self.symbol, True, (0, 0, 0))
+            text_rect = text.get_rect(center=(self.ObjPos.x + self.width // 2, self.ObjPos.y + self.height // 2))
+            text_rect.height = self.height
+            text_rect.width = self.width
+            screen.blit(text, text_rect)
         
-    def is_hovered(self, pos=[Pos, ()]) -> bool:
+    def is_hovered(self, pos: Pos|tuple) -> bool:
         if type(pos) != Pos:
             pos = Pos(pos[0], pos[1])
             
@@ -144,14 +151,15 @@ class Button:
         if(self.symbol != " "):
             return
         
-        if (player.id == 1):
-            self.symbol = "X"
-        elif (player.id == 2):
-            self.symbol = "O"
+        self.symbol = player.symbol
             
 class Player:
     
     id = 0
+    symbol = None
     
-    def __init__(self, id):
+    def __init__(self, id, symbol):
         self.id = id
+        self.symbol = symbol
+        
+        

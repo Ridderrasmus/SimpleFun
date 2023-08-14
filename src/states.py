@@ -1,6 +1,59 @@
 from constants import *
 from gameobjects import *
 
+
+
+
+###################################
+###          Menu state         ###
+###################################
+
+class Menu:
+    game = None
+    
+    def __init__(self, game) -> None:
+        self.game = game
+    
+    def loop(self):
+        screen = self.game.screen
+        ### Draw BG ###
+        screen.fill((130, 30, 40))
+        
+        ## Draw title ##
+        title_font = pygame.font.SysFont("segoeuiemoji", 100)
+        title_text = title_font.render("Tic Tac Toe", True, (255, 255, 255))
+        title_text_rect = title_text.get_rect(center=(SCREEN_SIZE // 2, SCREEN_SIZE // 2 - 100))
+        screen.blit(title_text, title_text_rect)
+        
+    
+    def event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            self.game.curr_state = "board"
+    
+
+###################################
+###       Game over state       ###
+###################################
+
+class GameOver:
+    game = None
+    
+    def __init__(self, game) -> None:
+        self.game = game
+        
+    def event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            self.game.change_state("menu")
+    
+    def loop(self):
+        screen = self.game.screen
+        
+    
+
+###################################
+###       Main game state       ###
+###################################
+
 class Board:
     """The game board for tic tac toe.
 
@@ -14,13 +67,15 @@ class Board:
     board_width = 0
     board_height = 0
     btn_size = 0
+    game = None
     
     curr_player = None
     
-    def __init__(self, players, board_start_pos: tuple|Pos, board_end_pos: tuple|Pos, btn_size: int):
+    def __init__(self, game, board_start_pos: tuple|Pos, board_end_pos: tuple|Pos, btn_size: int):
         
-        self.players = players
-        self.curr_player = players[0]
+        self.game = game
+        self.players = game.players
+        self.curr_player = game.players[0]
         
         if type(board_start_pos) == tuple:
             board_start_pos = Pos(board_start_pos[0], board_start_pos[1])
@@ -36,10 +91,11 @@ class Board:
         self.create_squares()
         
     
-    def __init__(self, players, board_size: tuple|int, btn_size: int):
+    def __init__(self, game, board_size: tuple|int, btn_size: int):
         
-        self.players = players
-        self.curr_player = players[0]
+        self.game = game
+        self.players = game.players
+        self.curr_player = game.players[0]
         
         if type(board_size) == tuple:
             self.board_width = board_size[0]
@@ -52,19 +108,22 @@ class Board:
         
         self.create_squares()
         
-    def loop(self, screen):
-        ### Event loop ###
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-                elif event.type == pygame.MOUSEBUTTONDOWN:
-                    self.make_move()
-                    
-            ### Draw BG ###
-            screen.fill(BG_COLOUR)
-            
-            ### Draw screen ###
-            gameboard.draw(screen)
+    def reset(self):
+        self.board_squares = []
+        
+    def loop(self):
+        
+        screen = self.game.screen
+
+        ### Draw BG ###
+        screen.fill(BG_COLOUR)
+        
+        ### Draw screen ###
+        self.draw(screen)
+        
+    def event(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            self.make_move()
     
     def create_squares(self):
         for x in (range(self.square_layout)):
@@ -130,7 +189,7 @@ class Board:
             if self.check_win() < 0:
                 self.advance_turn()
             else:
-                self.board_squares = []
+                self.game.change_state("menu")
             
             return
             
