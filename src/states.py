@@ -2,13 +2,11 @@ from constants import *
 from gameobjects import *
 
 
-
-
 ###################################
 ###          Menu state         ###
 ###################################
 
-class Menu:
+class Menu:   
     game = None
     
     def __init__(self, game) -> None:
@@ -37,9 +35,13 @@ class Menu:
 
 class GameOver:
     game = None
+    winner = None
     
     def __init__(self, game) -> None:
         self.game = game
+        
+    def reset(self):
+        self.winner = None
         
     def event(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -48,6 +50,20 @@ class GameOver:
     def loop(self):
         screen = self.game.screen
         
+        if self.winner == None:
+            return
+        
+        if self.winner == 0:
+            text_font = pygame.font.SysFont("segoeuiemoji", 100)
+            text = text_font.render("Draw!", True, (255, 255, 255))
+            text_rect = text.get_rect(center=(SCREEN_SIZE // 2, SCREEN_SIZE // 2))
+            screen.blit(text, text_rect)
+            return
+        
+        text_font = pygame.font.SysFont("segoeuiemoji", 100)
+        text = text_font.render(f"Player {self.winner.symbol} wins!", True, (255, 255, 255))
+        text_rect = text.get_rect(center=(SCREEN_SIZE // 2, SCREEN_SIZE // 2))
+        screen.blit(text, text_rect)
     
 
 ###################################
@@ -153,8 +169,6 @@ class Board:
         if square_symbols[0] == square_symbols[4] == square_symbols[8] != " ":
             return 1
         elif square_symbols[2] == square_symbols[4] == square_symbols[6] != " ":
-            if square_symbols[2] == "":
-                return -1
             return 1
         
         # Check draw
@@ -186,10 +200,14 @@ class Board:
             
             square.click(self.curr_player)
             
-            if self.check_win() < 0:
+            check = self.check_win()
+            if check < 0:
                 self.advance_turn()
             else:
-                self.game.change_state("menu")
+                if check != 0:
+                    check = self.curr_player
+                self.game.game_states["game_over"].winner = check
+                self.game.change_state("game_over")
             
             return
             
