@@ -29,14 +29,13 @@ class Server:
     
     def __init__(self) -> None:
         # Config
-        cfgLoader = FileLoader("config.json", {"ipadress" : socket.gethostbyname(socket.gethostname()), "port" : 5555})
-        cfgLoader.load()
+        cfg_loader = FileLoader("config.json", {"ipadress" : socket.gethostbyname(socket.gethostname()), "port" : 5555})
+        cfg_loader.load()
+        self.ipadress = cfg_loader.getValue("ipadress")
+        self.port = cfg_loader.getValue("port")
         
         #Leaderboard
         lbLoader = FileLoader("leaderboard.json", {"players" : { "name" : "", "wins" : 0, "losses" : 0, "draws" : 0}})
-        
-        self.ipadress = cfgLoader.file["ipadress"]
-        self.port = cfgLoader.file["port"]
         
         print("Starting server on " + self.ipadress + ":" + str(self.port))
         
@@ -81,24 +80,21 @@ class FileLoader:
             json.dump(self.file, f)
         pass
     
-    def getValue(self, key : str, default = None):
+    def getvalue(self, key : str, default = None):
         self.load()
         if default == None:
             return self.file[key]
         return self.file.get(key, default)
     
-    def getValues(self):
+    def getvalues(self):
         self.load()
         return self.file
     
-    def setValue(self, key : str, value):
+    def setvalue(self, key : str, value):
         self.file[key] = value
         self.save()
-
-def main():
-    server = Server()
 
 
 
 if __name__ == "__main__":
-    main()
+    server = Server()
