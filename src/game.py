@@ -11,6 +11,8 @@
 #   Rasmus Tanggaard, Malthe Sørensen, Jonas Søgaard Frederiksen
 
 import pygame
+from fileparser import *
+from network import *
 from gameobjects import *
 from states import *
 from constants import *
@@ -85,4 +87,8 @@ class Application:
 
 
 if __name__ == "__main__":
-    app = Application()
+    #app = Application()
+    cfg_loader = ConfigLoader("config.json", {"ipadress" : "localhost", "port" : "5555"})
+    
+    server_socket = ServerSocket(cfg_loader.get("ipadress"), cfg_loader.get("port"))
+    
